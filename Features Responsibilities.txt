@@ -2,7 +2,7 @@ Grade:	|Features:		| Name:
 ________________________________________
 C	|Sprites		| Mat
 	|Player Movement	| Rog
-	|Player Shooting	| Rog
+	|Player Shooting	| Mat
 	|Enemy Movement		| Rog
 	|Enemy Rows		| Rog
 	|Enemy Shooting		| Mat
