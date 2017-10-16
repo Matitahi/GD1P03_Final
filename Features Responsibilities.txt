@@ -1,0 +1,21 @@
+Grade:	|Features:		| Name:
+________________________________________
+C	|Sprites		| Mat
+	|Player Movement	| Rog
+	|Player Shooting	| Rog
+	|Enemy Movement		| Rog
+	|Enemy Rows		| Rog
+	|Enemy Shooting		| Mat
+________________________________________
+B	|Bunkers		| Mat
+	|Mystery Ship		| Mat
+	|Scoring		| Rog
+	|Lives			| Rog
+	|Lose Message		| Rog
+	|Debug Mode		| Rog
+________________________________________
+A	|Rounds (faster waves)	| Mat
+	|Title and Gameover	| Rog
+	|Save Scores		| Both
+________________________________________
+A+	|Additional Features	| Both
