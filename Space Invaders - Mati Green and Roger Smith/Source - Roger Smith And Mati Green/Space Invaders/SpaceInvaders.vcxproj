@@ -82,28 +82,32 @@
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="background.cpp" />
-    <ClCompile Include="ball.cpp" />
-    <ClCompile Include="brick.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="barrier.cpp" />
     <ClCompile Include="clock.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemybullet.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="framecounter.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="paddle.cpp" />
+    <ClCompile Include="playership.cpp" />
     <ClCompile Include="sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="background.h" />
-    <ClInclude Include="ball.h" />
-    <ClInclude Include="brick.h" />
+    <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="barrier.h" />
     <ClInclude Include="clock.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemybullet.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="framecounter.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="level.h" />
-    <ClInclude Include="paddle.h" />
+    <ClInclude Include="playership.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="utils.h" />
@@ -113,12 +117,30 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\Background.bmp" />
-    <Image Include="Sprites\BallMask.bmp" />
-    <Image Include="Sprites\BallSprite.bmp" />
-    <Image Include="Sprites\BrickMask.bmp" />
-    <Image Include="Sprites\BrickSprite.bmp" />
-    <Image Include="Sprites\PaddleMask.bmp" />
-    <Image Include="Sprites\PaddleSprite.bmp" />
+    <Image Include="Sprites\BackgroundMask.bmp" />
+    <Image Include="Sprites\Barrier1Sprite.bmp" />
+    <Image Include="Sprites\Barrier2Sprite.bmp" />
+    <Image Include="Sprites\BarrierMask.bmp" />
+    <Image Include="Sprites\Enemy1_1Mask.bmp" />
+    <Image Include="Sprites\Enemy1_1Sprite.bmp" />
+    <Image Include="Sprites\Enemy1_2Mask.bmp" />
+    <Image Include="Sprites\Enemy1_2Sprite.bmp" />
+    <Image Include="Sprites\Enemy2_1Mask.bmp" />
+    <Image Include="Sprites\Enemy2_1Sprite.bmp" />
+    <Image Include="Sprites\Enemy2_2Mask.bmp" />
+    <Image Include="Sprites\Enemy2_2Sprite.bmp" />
+    <Image Include="Sprites\Enemy3_1Mask.bmp" />
+    <Image Include="Sprites\Enemy3_1Sprite.bmp" />
+    <Image Include="Sprites\Enemy3_2Mask.bmp" />
+    <Image Include="Sprites\Enemy3_2Sprite.bmp" />
+    <Image Include="Sprites\Enemy4Mask.bmp" />
+    <Image Include="Sprites\Enemy4Sprite.bmp" />
+    <Image Include="Sprites\EnemyBulletMask.bmp" />
+    <Image Include="Sprites\EnemyBulletSprite.bmp" />
+    <Image Include="Sprites\PlayerBulletMask.bmp" />
+    <Image Include="Sprites\PlayerBulletSprite.bmp" />
+    <Image Include="Sprites\PlayerShipMask.bmp" />
+    <Image Include="Sprites\PlayerShipSprite.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

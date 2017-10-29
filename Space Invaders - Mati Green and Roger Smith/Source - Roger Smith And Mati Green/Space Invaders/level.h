@@ -22,14 +22,17 @@
 #include <string>
 
 // Local Includes
+#include "enemy.h"
+#include "enemybullet.h"
+#include "barrier.h"
 
 // Types
 
 // Constants
 
 // Prototypes
-class CBall;
-class CPaddle;
+class CPlayerBullet;
+class CPlayerShip;
 class CBrick;
 class CFPSCounter;
 class CBackGround;
@@ -46,25 +49,23 @@ public:
     virtual void Draw();
     virtual void Process(float _fDeltaTick);
 
-    CPaddle* GetPaddle() const;
+    CPlayerShip* GetPlayerShip() const;
 
-    int GetBricksRemaining() const;
+    int GetEnemiesRemaining() const;
 
 protected:
-    void ProcessBallWallCollision();
-	void ProcessPaddleWallCollison();
-    void ProcessBallPaddleCollision();
-    void ProcessBallBrickCollision();
+	void ProcessEnemyCollision();
+	void ProcessEnemyShoot();
+	void ProcessBulletBarrierCollisions();
+	void ProcessBoundsCollisions();
 
     void ProcessCheckForWin();
-
-    void ProcessBallBounds();
 
     void UpdateScoreText();
     void DrawScore();
 	void DrawFPS();
 
-    void SetBricksRemaining(int _i);
+    void SetEnemiesRemaining(int _i);
 
 private:
     CLevel(const CLevel& _kr);
@@ -75,19 +76,19 @@ public:
 
 protected:
 	CBackGround* m_pBackground;
-    CBall* m_pBall;
-    CPaddle* m_pPaddle;
-    std::vector<CBrick*> m_vecBricks;
+    CPlayerBullet* m_pPlayerBullet;
+    CPlayerShip* m_pPlayerShip;
+	CEnemy* m_pEnemies[11][5];
+	std::vector<CBarrier*> m_vecBarrier;
+    std::vector<CEnemyBullet*> m_vecEnemyBullets;
 	CFPSCounter* m_fpsCounter;
 
     int m_iWidth;
     int m_iHeight;
 
-    int m_iBricksRemaining;
+    int m_iEnemiesRemaining;
 
     std::string m_strScore;
-
-private:
 
 };
 

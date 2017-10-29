@@ -22,7 +22,7 @@
 #include "Clock.h"
 #include "utils.h"
 #include "level.h"
-#include "paddle.h"
+#include "playership.h"
 
 const int kiWidth = 400;
 const int kiHeight = 400;

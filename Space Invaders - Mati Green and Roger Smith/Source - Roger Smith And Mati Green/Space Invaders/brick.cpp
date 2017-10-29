@@ -41,7 +41,7 @@ CBrick::~CBrick()
 bool
 CBrick::Initialise()
 {
-    VALIDATE(CEntity::Initialise(IDB_BRICKSPRITE, IDB_BRICKMASK));
+    VALIDATE(CEntity::Initialise(IDB_ENEMY1_1SPRITE, IDB_ENEMY1_1MASK));
 
     return (true);
 }
