@@ -71,8 +71,9 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 
 	srand(time(NULL));
 
-    const float fBallVelX = 0.0f;
-    const float fBallVelY = 230.0f;
+    const float fPlayerBulletVelX = 0.0f;
+    const float fPlayerBulletVelY = 230.0f;
+	const float fMysteryShipVelX = 100.0f;
 
 	m_pBackground = new CBackGround();
 	VALIDATE(m_pBackground->Initialise());
@@ -81,10 +82,13 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 	m_pBackground->SetY((float)m_iHeight / 2);
 
 	m_pPlayerBullet = new CPlayerBullet();
-    VALIDATE(m_pPlayerBullet->Initialise(m_iWidth / 2.0f, m_iHeight / 2.0f, fBallVelX, fBallVelY));
+    VALIDATE(m_pPlayerBullet->Initialise(m_iWidth / 2.0f, m_iHeight / 2.0f, fPlayerBulletVelX, fPlayerBulletVelY));
 
     m_pPlayerShip = new CPlayerShip();
     VALIDATE(m_pPlayerShip->Initialise());
+
+	m_pMysteryShip = new CMysteryShip();
+	VALIDATE(m_pMysteryShip->Initialise(-10, 10, fMysteryShipVelX));
 
     // Set the player ship's position to be centered on the x, 
     // and a little bit up from the bottom of the window.
@@ -190,6 +194,9 @@ CLevel::Draw()
 	// Draw player bullet.
     m_pPlayerBullet->Draw();
 
+	// Draw Mystery ship.
+	m_pMysteryShip->Draw();
+
 	// Draw score.
     DrawScore();
 
@@ -209,6 +216,9 @@ CLevel::Process(float _fDeltaTick)
 	// Process player ship.
 	m_pPlayerShip->Process(_fDeltaTick);
 
+	// Process mystery ship.
+	m_pMysteryShip->Process(_fDeltaTick);
+
 	// Process player bullet collisions with enemies.
     ProcessEnemyCollision();
 
@@ -223,6 +233,9 @@ CLevel::Process(float _fDeltaTick)
 
 	// Process checking for win condition.
     ProcessCheckForWin();
+
+	// Process the spawning of the mystery ship.
+	ProcessMysteryShipSpawns();
 	
 	// Process barriers.
 	for (int i = 0; i < m_vecBarrier.size(); ++i)
@@ -354,6 +367,12 @@ CLevel::ProcessBoundsCollisions()
 		m_pPlayerBullet->SetHit(true);
 	}
 
+	// MysteryShip out of bounds.
+	if (m_pMysteryShip->GetX() > (m_iWidth + (m_pMysteryShip->GetWidth() / 2)))
+	{
+		m_pMysteryShip->SetHit(true);
+	}
+
 	// enemy out of bounds.
 	for (int i = 0; i < 5; ++i)
 	{
@@ -425,6 +444,21 @@ CLevel::ProcessEnemyShoot()
 	}
 }
 
+void 
+CLevel::ProcessMysteryShipSpawns()
+{
+	if (m_pMysteryShip->IsHit() == true)
+	{
+		if ((rand() % 10000 + 1) == 1)
+		{
+			m_pMysteryShip->SetX(0 - (m_pMysteryShip->GetWidth() / 2));
+			m_pMysteryShip->SetY(10);
+			// Possibly process before drawn?
+			m_pMysteryShip->SetHit(false);
+		}
+	}
+}
+
 void
 CLevel::ProcessEnemyCollision()
 {
@@ -434,10 +468,11 @@ CLevel::ProcessEnemyCollision()
 		{
 			if (!m_pEnemies[j][i]->IsHit())
 			{
-				float fBallR = m_pPlayerBullet->GetRadius();
+				float fPlayerBulletH = m_pPlayerBullet->GetHeight();
+				float fPlayerBulletW = m_pPlayerBullet->GetWidth();
 
-				float fBallX = m_pPlayerBullet->GetX();
-				float fBallY = m_pPlayerBullet->GetY();
+				float fPlayerBulletX = m_pPlayerBullet->GetX();
+				float fPlayerBulletY = m_pPlayerBullet->GetY();
 
 				float fEnemyX = m_pEnemies[j][i]->GetX();
 				float fEnemyY = m_pEnemies[j][i]->GetY();
@@ -445,10 +480,10 @@ CLevel::ProcessEnemyCollision()
 				float fEnemyH = m_pEnemies[j][i]->GetHeight();
 				float fEnemyW = m_pEnemies[j][i]->GetWidth();
 
-				if ((fBallX + fBallR > fEnemyX - fEnemyW / 2) &&
-					(fBallX - fBallR < fEnemyX + fEnemyW / 2) &&
-					(fBallY + fBallR > fEnemyY - fEnemyH / 2) &&
-					(fBallY - fBallR < fEnemyY + fEnemyH / 2))
+				if ((fPlayerBulletX + fPlayerBulletW > fEnemyX - fEnemyW / 2) && //ball.right > paddle.left
+					(fPlayerBulletX - fPlayerBulletW < fEnemyX + fEnemyW / 2) && //ball.left < paddle.right
+					(fPlayerBulletY + fPlayerBulletH > fEnemyY - fEnemyH / 2) && //ball.bottom > paddle.top
+					(fPlayerBulletY - fPlayerBulletH < fEnemyY + fEnemyH / 2))  //ball.top < paddle.bottom
 				{
 					m_pPlayerBullet->SetHit(true);
 					m_pEnemies[j][i]->SetHit(true);
@@ -458,6 +493,31 @@ CLevel::ProcessEnemyCollision()
 			}
 		}
     }
+
+	if ((m_pMysteryShip->IsHit() == false) && (m_pPlayerBullet->IsHit() == false))
+	{
+		float fMysteryShipX = m_pMysteryShip->GetX();
+		float fMysteryShipY = m_pMysteryShip->GetY();
+
+		float fMysteryShipH = m_pMysteryShip->GetHeight();
+		float fMysteryShipW = m_pMysteryShip->GetWidth();
+
+		float fBulletX = m_pPlayerBullet->GetX();
+		float fBulletY = m_pPlayerBullet->GetY();
+
+		float fBulletH = m_pPlayerBullet->GetHeight();
+		float fBulletW = m_pPlayerBullet->GetWidth();
+
+		if ((fBulletX + fBulletW > fMysteryShipX - fMysteryShipW / 2) && //ball.right > paddle.left
+			(fBulletX - fBulletW < fMysteryShipX + fMysteryShipW / 2) && //ball.left < paddle.right
+			(fBulletY + fBulletH > fMysteryShipY - fMysteryShipH / 2) && //ball.bottom > paddle.top
+			(fBulletY - fBulletH < fMysteryShipY + fMysteryShipH / 2))  //ball.top < paddle.bottom
+		{
+			m_pPlayerBullet->SetHit(true);
+			m_pMysteryShip->SetHit(true);
+		}
+	}
+
 }
 
 void

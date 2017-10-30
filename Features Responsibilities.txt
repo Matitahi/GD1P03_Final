@@ -7,8 +7,8 @@ C	|Sprites		| Mat	| Done
 	|Enemy Rows		| Rog	| Done
 	|Enemy Shooting		| Mat	| Done
 ________________________________________|__________
-B	|Bunkers		| Mat	|
-	|Mystery Ship		| Mat	|
+B	|Bunkers		| Mat	| Done
+	|Mystery Ship		| Mat	| Done
 	|Scoring		| Rog	|
 	|Lives			| Rog	|
 	|Lose Message		| Rog	|

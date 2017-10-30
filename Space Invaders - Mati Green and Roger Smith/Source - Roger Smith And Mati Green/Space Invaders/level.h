@@ -25,6 +25,7 @@
 #include "enemy.h"
 #include "enemybullet.h"
 #include "barrier.h"
+#include "mysteryship.h"
 
 // Types
 
@@ -58,6 +59,7 @@ protected:
 	void ProcessEnemyShoot();
 	void ProcessBulletBarrierCollisions();
 	void ProcessBoundsCollisions();
+	void ProcessMysteryShipSpawns();
 
     void ProcessCheckForWin();
 
@@ -82,6 +84,8 @@ protected:
 	std::vector<CBarrier*> m_vecBarrier;
     std::vector<CEnemyBullet*> m_vecEnemyBullets;
 	CFPSCounter* m_fpsCounter;
+	CMysteryShip* m_pMysteryShip;
+
 
     int m_iWidth;
     int m_iHeight;

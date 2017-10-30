@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="background.cpp" />
+    <ClCompile Include="mysteryship.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="barrier.cpp" />
     <ClCompile Include="clock.cpp" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="background.h" />
+    <ClInclude Include="mysteryship.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="barrier.h" />
     <ClInclude Include="clock.h" />
