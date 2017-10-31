@@ -28,6 +28,8 @@
 // Implementation
 
 CPlayerShip::CPlayerShip()
+	: m_bHit(false)
+	, m_iLives(3)
 {
 
 }
@@ -54,7 +56,6 @@ CPlayerShip::Draw()
 void
 CPlayerShip::Process(float _fDeltaTick)
 {
-    
 	float fHalfPaddleW = m_pSprite->GetWidth() / 2.0;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
@@ -81,4 +82,19 @@ CPlayerShip::Process(float _fDeltaTick)
 	}
 	
 	CEntity::Process(_fDeltaTick);
+}
+
+bool CPlayerShip::IsHit() const
+{
+	return false;
+}
+
+void CPlayerShip::SetLives(int _iLives)
+{
+	m_iLives = _iLives;
+} 
+
+int CPlayerShip::GetLives() const
+{
+	return m_iLives;
 }

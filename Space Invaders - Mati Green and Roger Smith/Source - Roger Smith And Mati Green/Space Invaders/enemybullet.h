@@ -47,14 +47,16 @@ public:
 
 	float GetRadius() const;
 
+	void SetHit(bool _bHit);
+	bool IsHit() const;
+
 private:
 	CEnemyBullet(const CEnemyBullet& _kr);
 	CEnemyBullet& operator= (const CEnemyBullet& _kr);
 
 protected:
 	float m_fVelocityY;
-
-
+	bool m_bHit;
 };
 
 

@@ -29,12 +29,22 @@
 
 CEnemy::CEnemy(int _iType)
 	: m_bHit(false)
+	, m_bMoveRight(true)
+	, m_iStepTick(0)
+	, m_iStepFreq(2)
+	, m_fSpeed(50.0)
+	, m_bCanMove(true)
 {
 	m_iType = _iType;
 }
 
 CEnemy::CEnemy()
 	: m_bHit(false)
+	, m_bMoveRight(true)
+	, m_iStepTick(0)
+	, m_iStepFreq(2)
+	, m_fSpeed(50.0)
+	, m_bCanMove(true)
 {
 
 }
@@ -75,10 +85,20 @@ CEnemy::Draw()
 void
 CEnemy::Process(float _fDeltaTick)
 {
-	if (!m_bHit)
+	bool bCanStep = m_iStepTick % 20 == 0;
+	if (!m_bHit && m_bCanMove && bCanStep)
 	{
+		if (m_bMoveRight)
+		{
+			m_fX += m_fSpeed * _fDeltaTick;
+		}
+		else
+		{
+			m_fX -= m_fSpeed * _fDeltaTick;
+		}
 		CEntity::Process(_fDeltaTick);
 	}
+	m_iStepTick++;
 }
 
 void
@@ -91,6 +111,29 @@ bool
 CEnemy::IsHit() const
 {
 	return (m_bHit);
+}
+
+void CEnemy::ChangeDirection() 
+{
+	if (m_bMoveRight == true)
+	{
+		m_bMoveRight = false;
+	}
+	else
+	{
+		m_bMoveRight = true;
+		m_fSpeed += 2.5;
+	}
+}
+
+bool CEnemy::MovingRight() const
+{
+	return m_bMoveRight;
+}
+
+void CEnemy::CanMove(bool _bMovement)
+{
+	m_bCanMove = _bMovement;
 }
 
 int 

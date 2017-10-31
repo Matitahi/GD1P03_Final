@@ -48,6 +48,12 @@ public:
 
 	bool IsHit() const;
 
+	void ChangeDirection();
+
+	bool MovingRight() const;
+
+	void CanMove(bool _bMovement);
+
 private:
 	CEnemy(const CEnemy& _kr);
 	CEnemy& operator= (const CEnemy& _kr);
@@ -58,6 +64,11 @@ public:
 protected:
 	bool m_bHit;
 	int m_iType;
+	bool m_bMoveRight;
+	bool m_bCanMove;
+	int m_iStepTick;
+	int m_iStepFreq;
+	float m_fSpeed;
 };
 
 

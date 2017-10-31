@@ -55,16 +55,24 @@ public:
     int GetEnemiesRemaining() const;
 
 protected:
+	void ProcessPlayerCollision();
 	void ProcessEnemyCollision();
 	void ProcessEnemyShoot();
 	void ProcessBulletBarrierCollisions();
 	void ProcessBoundsCollisions();
 	void ProcessMysteryShipSpawns();
 
+	void ProcessCheckForLoss();
     void ProcessCheckForWin();
+
+	void SetScore(int _iScore);
+	int GetScore() const;
 
     void UpdateScoreText();
     void DrawScore();
+
+	void DrawLives();
+
 	void DrawFPS();
 
     void SetEnemiesRemaining(int _i);
@@ -86,14 +94,15 @@ protected:
 	CFPSCounter* m_fpsCounter;
 	CMysteryShip* m_pMysteryShip;
 
-
     int m_iWidth;
     int m_iHeight;
 
     int m_iEnemiesRemaining;
 
+	int m_iScore;
     std::string m_strScore;
 
+	std::string m_strLives;
 };
 
 #endif    // __LEVEL_H__

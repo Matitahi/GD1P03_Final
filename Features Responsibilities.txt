@@ -9,8 +9,8 @@ C	|Sprites		| Mat	| Done
 ________________________________________|__________
 B	|Bunkers		| Mat	| Done
 	|Mystery Ship		| Mat	| Done
-	|Scoring		| Rog	|
-	|Lives			| Rog	|
+	|Scoring		| Rog	| Done
+	|Lives			| Rog	| Done
 	|Lose Message		| Rog	|
 	|Debug Mode		| Rog	|
 ________________________________________|__________
