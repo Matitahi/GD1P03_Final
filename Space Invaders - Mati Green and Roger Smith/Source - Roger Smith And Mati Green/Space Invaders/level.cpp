@@ -36,6 +36,13 @@
 
 //#define CHEAT_BOUNCE_ON_BACK_WALL
 
+enum EShipPoints
+{
+	POINTS_ENEMY1 = 10,
+	POINTS_ENEMY2 = 20,
+	POINTS_ENEMY3 = 30,
+};
+
 CLevel::CLevel()
 : m_iEnemiesRemaining(0)
 , m_pPlayerShip(0)
@@ -43,6 +50,7 @@ CLevel::CLevel()
 , m_iWidth(0)
 , m_iHeight(0)
 , m_fpsCounter(0)
+, m_iScore(0)
 {
 
 }
@@ -82,7 +90,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 	m_pBackground->SetY((float)m_iHeight / 2);
 
 	m_pPlayerBullet = new CPlayerBullet();
-    VALIDATE(m_pPlayerBullet->Initialise(m_iWidth / 2.0f, m_iHeight / 2.0f, fPlayerBulletVelX, fPlayerBulletVelY));
+    VALIDATE(m_pPlayerBullet->Initialise(0, 0, fPlayerBulletVelX, fPlayerBulletVelY));
 
     m_pPlayerShip = new CPlayerShip();
     VALIDATE(m_pPlayerShip->Initialise());
@@ -200,8 +208,11 @@ CLevel::Draw()
 	// Draw score.
     DrawScore();
 
-	// Draw fps.
-	DrawFPS();
+	// Draw number of lives the player has remaining.
+	DrawLives();
+
+	// DrawFPS
+	//DrawFPSText();
 }
 
 void
@@ -219,6 +230,9 @@ CLevel::Process(float _fDeltaTick)
 	// Process mystery ship.
 	m_pMysteryShip->Process(_fDeltaTick);
 
+	// Process player collisions with enemy or enemy bullet.
+	ProcessPlayerCollision();
+	
 	// Process player bullet collisions with enemies.
     ProcessEnemyCollision();
 
@@ -230,6 +244,9 @@ CLevel::Process(float _fDeltaTick)
 
 	// Process entity collisions with window bounds.
 	ProcessBoundsCollisions();
+
+	// Process checking for loss condition.
+	ProcessCheckForLoss();
 
 	// Process checking for win condition.
     ProcessCheckForWin();
@@ -374,14 +391,37 @@ CLevel::ProcessBoundsCollisions()
 	}
 
 	// enemy out of bounds.
+	int iLeftBound = m_pEnemies[0][0]->GetWidth();
+	int iRightBound = m_iWidth - m_pEnemies[0][0]->GetWidth();
+	int iDeltaY = 0;
+	//bool bCanChangeDirection = true;
+
 	for (int i = 0; i < 5; ++i)
 	{
 		for (int j = 0; j < 11; ++j)
 		{
-			if ((m_pEnemies[j][i]->GetX() > m_iWidth)
-				|| (m_pEnemies[j][i]->GetX() < 0))
+			if (((m_pEnemies[j][i]->GetX() >= iRightBound) || (m_pEnemies[j][i]->GetX() <= iLeftBound)))
 			{
-				// do logic.
+				//bCanChangeDirection = false;
+				for (int k = 0; k < 5; ++k)
+				{
+					for (int l = 0; l < 11; ++l)
+					{
+						if (m_pEnemies[l][k]->MovingRight())
+						{
+							m_pEnemies[l][k]->SetX(m_pEnemies[l][k]->GetX() - 0.5);
+						}
+						else
+						{
+							m_pEnemies[l][k]->SetX(m_pEnemies[l][k]->GetX() + 0.5);
+						}
+
+						//m_pEnemies[l][k]->CanMove(false);
+						m_pEnemies[l][k]->ChangeDirection();
+						iDeltaY = m_pEnemies[l][k]->GetY() + (m_pEnemies[l][k]->GetHeight() * 0.2);
+						m_pEnemies[l][k]->SetY(iDeltaY);
+					}
+				}
 			}
 		}
 	}
@@ -459,6 +499,41 @@ CLevel::ProcessMysteryShipSpawns()
 	}
 }
 
+void CLevel::ProcessPlayerCollision()
+{
+	bool bPlayerHit = false;
+
+	for (int i = 0; i < m_vecEnemyBullets.size(); ++i)
+	{
+		float fEnemyBulletH = m_vecEnemyBullets[i]->GetHeight();
+		float fEnemyBulletW = m_vecEnemyBullets[i]->GetWidth();
+
+		float fEnemyBulletX = m_vecEnemyBullets[i]->GetX();
+		float fEnemyBulletY = m_vecEnemyBullets[i]->GetY();
+
+		float fPlayerX = m_pPlayerShip->GetX();
+		float fPlayerY = m_pPlayerShip->GetY();
+
+		float fPlayerH = m_pPlayerShip->GetHeight();
+		float fPlayerW = m_pPlayerShip->GetWidth();
+
+		if ((fEnemyBulletX + fEnemyBulletW > fPlayerX - fPlayerW / 2) && //ball.right > paddle.left
+			(fEnemyBulletX - fEnemyBulletW < fPlayerX + fPlayerW / 2) && //ball.left < paddle.right
+			(fEnemyBulletY + fEnemyBulletH > fPlayerY - fPlayerH / 2) && //ball.bottom > paddle.top
+			(fEnemyBulletY - fEnemyBulletH < fPlayerY + fPlayerH / 2))  //ball.top < paddle.bottom
+		{
+			delete m_vecEnemyBullets[i];
+			m_vecEnemyBullets.erase(m_vecEnemyBullets.begin() + i);
+			bPlayerHit = true;
+		}
+	}
+
+	if (bPlayerHit == true)
+	{
+		m_pPlayerShip->SetLives(m_pPlayerShip->GetLives() - 1);
+	}
+}
+
 void
 CLevel::ProcessEnemyCollision()
 {
@@ -466,7 +541,7 @@ CLevel::ProcessEnemyCollision()
 	{
 		for (int j = 0; j < 11; ++j)
 		{
-			if (!m_pEnemies[j][i]->IsHit())
+			if ((!m_pEnemies[j][i]->IsHit()) && (!m_pPlayerBullet->IsHit()))
 			{
 				float fPlayerBulletH = m_pPlayerBullet->GetHeight();
 				float fPlayerBulletW = m_pPlayerBullet->GetWidth();
@@ -489,6 +564,43 @@ CLevel::ProcessEnemyCollision()
 					m_pEnemies[j][i]->SetHit(true);
 
 					SetEnemiesRemaining(GetEnemiesRemaining() - 1);
+
+					// Find the type of enemy that was hit and store the appropriate amount of points
+					int iDeltaScore = 0;
+					switch (m_pEnemies[j][i]->GetType())
+					{
+					case 1:
+					{
+						iDeltaScore = POINTS_ENEMY1;
+						break;
+					}
+
+					case 2:
+					{
+						iDeltaScore = POINTS_ENEMY2;
+						break;
+					}
+
+					case 3:
+					{
+						iDeltaScore = POINTS_ENEMY3;
+						break;
+					}
+
+					case 4:
+					{
+						// Since mystery ship has a variety of possible options, easier to deal with through random numbers
+						int iRand = rand() % 6 + 1;
+						iDeltaScore = iRand * 50;
+						break;
+					}
+
+					default:break;
+					}
+
+					// Add the points above to the player's total score
+					SetScore(GetScore() + iDeltaScore);
+					UpdateScoreText();
 				}
 			}
 		}
@@ -520,6 +632,14 @@ CLevel::ProcessEnemyCollision()
 
 }
 
+void CLevel::ProcessCheckForLoss()
+{
+	if (m_pPlayerShip->GetLives() == 0)
+	{
+		CGame::GetInstance().GameOverLost();
+	}
+}
+
 void
 CLevel::ProcessCheckForWin()
 {
@@ -537,6 +657,16 @@ CLevel::ProcessCheckForWin()
     CGame::GetInstance().GameOverWon();
 }
 
+void CLevel::SetScore(int _iScore)
+{
+	m_iScore = _iScore;
+}
+
+int CLevel::GetScore() const
+{
+	return m_iScore;
+}
+
 int 
 CLevel::GetEnemiesRemaining() const
 {
@@ -551,6 +681,14 @@ CLevel::SetEnemiesRemaining(int _i)
 }
 
 void
+CLevel::UpdateScoreText()
+{
+	m_strScore = "Score: ";
+
+	m_strScore += ToString(GetScore());
+}
+
+void
 CLevel::DrawScore()
 {
     HDC hdc = CGame::GetInstance().GetBackBuffer()->GetBFDC();
@@ -562,16 +700,21 @@ CLevel::DrawScore()
     TextOutA(hdc, kiX, kiY, m_strScore.c_str(), static_cast<int>(m_strScore.size()));
 }
 
-
-
-void 
-CLevel::UpdateScoreText()
+void
+CLevel::DrawLives()
 {
-    m_strScore = "Enemies Remaining: ";
+	m_strLives = "Lives: ";
 
-    m_strScore += ToString(GetEnemiesRemaining());
+	m_strLives += ToString(m_pPlayerShip->GetLives());
+	
+	HDC hdc = CGame::GetInstance().GetBackBuffer()->GetBFDC();
+
+	const int kiX = m_iWidth - 75;
+	const int kiY = m_iHeight - 14;
+	SetBkMode(hdc, TRANSPARENT);
+
+	TextOutA(hdc, kiX, kiY, m_strLives.c_str(), static_cast<int>(m_strLives.size()));
 }
-
 
 void 
 CLevel::DrawFPS()

@@ -124,7 +124,6 @@ void
 CGame::GameOverLost()
 {
 	MessageBox(m_hMainWindow, L"Loser!", L"Game Over", MB_OK);
-	PostQuitMessage(0);
 }
 
 void

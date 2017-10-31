@@ -29,6 +29,7 @@
 
 CEnemyBullet::CEnemyBullet()
 	: m_fVelocityY(0.0f)
+	, m_bHit(false)
 {
 
 }
@@ -54,18 +55,20 @@ CEnemyBullet::Initialise(float _fPosX, float _fPosY, float _fVelocityY)
 void 
 CEnemyBullet::Draw()
 {
-
-	CEntity::Draw();
-
+	if (!m_bHit)
+	{
+		CEntity::Draw();
+	}	
 }
 
 void 
 CEnemyBullet::Process(float _fDeltaTick)
 {
-	m_fY += m_fVelocityY * _fDeltaTick;
-
-	CEntity::Process(_fDeltaTick);
-
+	if (!m_bHit)
+	{
+		m_fY += (m_fVelocityY * _fDeltaTick);
+		CEntity::Process(_fDeltaTick);
+	}
 }
 
 float 
@@ -84,5 +87,15 @@ float
 CEnemyBullet::GetRadius() const
 {
 	return (GetWidth() / 2.0f);
+}
+
+void CEnemyBullet::SetHit(bool _bHit)
+{
+	m_bHit = _bHit;
+}
+
+bool CEnemyBullet::IsHit() const
+{
+	return m_bHit;
 }
 

@@ -40,6 +40,11 @@ public:
     virtual void Draw();
     virtual void Process(float _fDeltaTick);
 
+	bool IsHit() const;
+
+	void SetLives(int _iLives);
+	int GetLives() const;
+
 
 protected:
 
@@ -51,6 +56,8 @@ private:
 public:
 
 protected:
+	bool m_bHit;
+	int m_iLives;
 
 private:
 
