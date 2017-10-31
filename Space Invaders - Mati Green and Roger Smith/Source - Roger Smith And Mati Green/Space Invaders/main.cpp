@@ -23,18 +23,65 @@
 #include "utils.h"
 #include "level.h"
 #include "playership.h"
+#include "resource.h"
 
 const int kiWidth = 400;
 const int kiHeight = 400;
 
+HINSTANCE g_hInstance;
 
 #define WINDOW_CLASS_NAME L"BSENGGFRAMEWORK"
+
+// Callback for the Debug window
+BOOL CALLBACK
+DebugDlgProc(HWND hDlg, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	switch (msg)
+	{
+	case WM_INITDIALOG:
+	{
+		break;
+	}
+	
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wparam))
+		{
+		case IDOK:
+		{
+			EndDialog(hDlg, 0);
+			return TRUE;
+			break;
+		}
+		default:break;
+		}
+	}
+	
+	case WM_CLOSE:
+	{
+		EndDialog(hDlg, 0);
+		return TRUE;
+		break;
+	}
+	default:break;
+	}
+	return FALSE;
+}
 
 LRESULT CALLBACK
 WindowProc(HWND _hWnd, UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 {
 	switch (_uiMsg)
 	{
+	case WM_KEYDOWN:
+	{
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+		{
+			DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_DEBUG), NULL, DebugDlgProc);
+		}
+
+		break;
+	}
 	case WM_MOUSEMOVE:
 	{
 		int iMouseX = LOWORD(_lParam);
@@ -108,8 +155,7 @@ WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdline, int _i
 	RECT _rect;
 	ZeroMemory(&msg, sizeof(MSG));
 
-
-	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Breakout");
+	HWND hwnd = CreateAndRegisterWindow(_hInstance, kiWidth, kiHeight, L"Space Invaders");
 
 	CGame& rGame = CGame::GetInstance();
 	
