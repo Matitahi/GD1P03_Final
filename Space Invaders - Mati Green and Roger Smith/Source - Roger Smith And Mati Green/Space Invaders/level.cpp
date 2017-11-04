@@ -4,12 +4,13 @@
 // Auckland
 // New Zealand
 //
-// (c) 2016 Media Design School.
+// (c) 2017 Media Design School.
 //
-// File Name	: 
-// Description	: 
-// Author		: Your Name
-// Mail			: your.name@mediadesign.school.nz
+// File Name	: level.cpp
+// Description	: Controls level implementation logic
+// Author		: Matitahi Green and Roger Smith
+// Mail			: matitahi.gre7573@mediadesign.school.nz
+//				: roger.smi7429@mediadesign.school.nz
 //
 
 // Library Includes
@@ -51,6 +52,9 @@ CLevel::CLevel()
 , m_iHeight(0)
 , m_fpsCounter(0)
 , m_iScore(0)
+, m_fType1BulletSpeed(75.0)
+, m_fType2BulletSpeed(100.0)
+, m_fType3BulletSpeed(125.0)
 {
 
 }
@@ -80,8 +84,8 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 	srand(time(NULL));
 
     const float fPlayerBulletVelX = 0.0f;
-    const float fPlayerBulletVelY = 230.0f;
-	const float fMysteryShipVelX = 100.0f;
+    float fPlayerBulletVelY = 250.0f;
+	float fMysteryShipVelX = 100.0f;
 
 	m_pBackground = new CBackGround();
 	VALIDATE(m_pBackground->Initialise());
@@ -103,7 +107,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
     m_pPlayerShip->SetX(_iWidth / 2.0f);
     m_pPlayerShip->SetY(_iHeight - ( 1.2 * m_pPlayerShip->GetHeight()));
 
-    const int kiNumEnemies = 55;
+    const int kiDefaultNumEnemies = 55;
     const int kiStartX = 20;
     const int kiGap = 5;
 
@@ -159,7 +163,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 		}
 	}
 
-    SetEnemiesRemaining(kiNumEnemies);
+    SetEnemiesRemaining(kiDefaultNumEnemies);
 
 	m_fpsCounter = new CFPSCounter();
 	VALIDATE(m_fpsCounter->Initialise());
@@ -454,7 +458,7 @@ CLevel::ProcessEnemyShoot()
 						{
 
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), 75.0f);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType1BulletSpeed);
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 
 						}
@@ -464,7 +468,7 @@ CLevel::ProcessEnemyShoot()
 						if ((rand() % 7500 + 1) == 1)
 						{
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), 100.0f);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType2BulletSpeed);
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 						}
 					}
@@ -473,7 +477,7 @@ CLevel::ProcessEnemyShoot()
 						if ((rand() % 5000 + 1) == 1)
 						{
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), 125.0f);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType3BulletSpeed);
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 						}
 					}
@@ -671,6 +675,36 @@ int
 CLevel::GetEnemiesRemaining() const
 {
     return (m_iEnemiesRemaining);
+}
+
+float CLevel::GetType1BulletSpeed() const
+{
+	return (m_fType1BulletSpeed);
+}
+
+void CLevel::SetType1BulletSpeed(float _fSpeed)
+{
+	m_fType1BulletSpeed = _fSpeed;
+}
+
+float CLevel::GetType2BulletSpeed() const
+{
+	return (m_fType2BulletSpeed);
+}
+
+void CLevel::SetType2BulletSpeed(float _fSpeed)
+{
+	m_fType2BulletSpeed = _fSpeed;
+}
+
+float CLevel::GetType3BulletSpeed() const
+{
+	return (m_fType3BulletSpeed);
+}
+
+void CLevel::SetType3BulletSpeed(float _fSpeed)
+{
+	m_fType3BulletSpeed = _fSpeed;
 }
 
 void 

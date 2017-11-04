@@ -4,13 +4,13 @@
 // Auckland
 // New Zealand
 //
-// (c) 2016 Media Design School
+// (c) 2017 Media Design School.
 //
-// File Name	: 
-// Description	: 
-// Author		: Your Name
-// Mail			: your.name@mediadesign.school.nz
-//
+// File Name	: enemybullet.h
+// Description	: Enemy bullet logic declaration file
+// Author		: Matitahi Green and Roger Smith
+// Mail			: matitahi.gre7573@mediadesign.school.nz
+//				: roger.smi7429@mediadesign.school.nz
 
 #if !defined(__ENEMYBULLET_H__)
 #define __ENEMYBULLET_H__

@@ -4,13 +4,13 @@
 // Auckland
 // New Zealand
 //
-// (c) 2016 Media Design School.
+// (c) 2017 Media Design School.
 //
-// File Name	: 
-// Description	: 
-// Author		: Your Name
-// Mail			: your.name@mediadesign.school.nz
-//
+// File Name	: game.cpp
+// Description	: Controls game implementation logic
+// Author		: Matitahi Green and Roger Smith
+// Mail			: matitahi.gre7573@mediadesign.school.nz
+//				: roger.smi7429@mediadesign.school.nz
 
 // Library Includes
 
@@ -124,6 +124,9 @@ void
 CGame::GameOverLost()
 {
 	MessageBox(m_hMainWindow, L"Loser!", L"Game Over", MB_OK);
+	PostQuitMessage(0);
+	//DestroyInstance();
+	//GetInstance();
 }
 
 void

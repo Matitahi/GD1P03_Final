@@ -1,27 +1,38 @@
-﻿  level.cpp
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(80): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(104): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(126): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(127): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(188): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(194): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(258): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(273): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(305): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(308): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(340): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(372): warning C4018: '<': signed/unsigned mismatch
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(394): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(395): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(412): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(416): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(421): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(422): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(506): warning C4018: '<': signed/unsigned mismatch
-  enemy.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
+﻿  sprite.cpp
+  playership.cpp
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\playership.cpp(59): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   main.cpp
+  level.cpp
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(84): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(108): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(131): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(192): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(198): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(262): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(277): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(309): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(312): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(344): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(376): warning C4018: '<': signed/unsigned mismatch
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(398): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(399): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(416): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(420): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(425): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(426): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+h:\semester 2\gd1p03\summatives\space invaders project\gd1p03_final\space invaders - mati green and roger smith\source - roger smith and mati green\space invaders\level.cpp(510): warning C4018: '<': signed/unsigned mismatch
   game.cpp
+  framecounter.cpp
+  entity.cpp
+  enemybullet.cpp
+  enemy.cpp
+  clock.cpp
+  barrier.cpp
+  PlayerBullet.cpp
+  mysteryship.cpp
+  background.cpp
+  backbuffer.cpp
+  Generating Code...
   SpaceInvaders.vcxproj -> H:\Semester 2\GD1P03\Summatives\Space Invaders Project\GD1P03_Final\Space Invaders - Mati Green and Roger Smith\Source - Roger Smith And Mati Green\Debug\SpaceInvaders.exe
   SpaceInvaders.vcxproj -> H:\Semester 2\GD1P03\Summatives\Space Invaders Project\GD1P03_Final\Space Invaders - Mati Green and Roger Smith\Source - Roger Smith And Mati Green\Debug\SpaceInvaders.pdb (Full PDB)

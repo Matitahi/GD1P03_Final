@@ -4,12 +4,13 @@
 // Auckland
 // New Zealand
 //
-// (c) 2016 Media Design School
+// (c) 2017 Media Design School.
 //
-// File Name	: 
-// Description	: 
-// Author		: Your Name
-// Mail			: your.name@mediadesign.school.nz
+// File Name	: level.h
+// Description	: Level logic declaration file
+// Author		: Matitahi Green and Roger Smith
+// Mail			: matitahi.gre7573@mediadesign.school.nz
+//				: roger.smi7429@mediadesign.school.nz
 //
 
 #pragma once
@@ -53,6 +54,16 @@ public:
     CPlayerShip* GetPlayerShip() const;
 
     int GetEnemiesRemaining() const;
+	void SetEnemiesRemaining(int _iNumEnemies);
+
+	float GetType1BulletSpeed() const;
+	void SetType1BulletSpeed(float _fSpeed);
+
+	float GetType2BulletSpeed() const;
+	void SetType2BulletSpeed(float _fSpeed);
+	
+	float GetType3BulletSpeed() const;
+	void SetType3BulletSpeed(float _fSpeed);
 
 protected:
 	void ProcessPlayerCollision();
@@ -74,8 +85,6 @@ protected:
 	void DrawLives();
 
 	void DrawFPS();
-
-    void SetEnemiesRemaining(int _i);
 
 private:
     CLevel(const CLevel& _kr);
@@ -103,6 +112,10 @@ protected:
     std::string m_strScore;
 
 	std::string m_strLives;
+
+	float m_fType1BulletSpeed;
+	float m_fType2BulletSpeed;
+	float m_fType3BulletSpeed;
 };
 
 #endif    // __LEVEL_H__
