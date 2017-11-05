@@ -56,14 +56,10 @@ public:
     int GetEnemiesRemaining() const;
 	void SetEnemiesRemaining(int _iNumEnemies);
 
-	float GetType1BulletSpeed() const;
-	void SetType1BulletSpeed(float _fSpeed);
-
-	float GetType2BulletSpeed() const;
-	void SetType2BulletSpeed(float _fSpeed);
+	CPlayerBullet* GetPlayerBullet() const;
 	
-	float GetType3BulletSpeed() const;
-	void SetType3BulletSpeed(float _fSpeed);
+	void ImplementBarriers();
+	void RestoreBarriers();
 
 protected:
 	void ProcessPlayerCollision();
@@ -113,9 +109,9 @@ protected:
 
 	std::string m_strLives;
 
-	float m_fType1BulletSpeed;
-	float m_fType2BulletSpeed;
-	float m_fType3BulletSpeed;
+	int m_iType1BulletSpeedIndex;
+	int m_iType2BulletSpeedIndex;
+	int m_iType3BulletSpeedIndex;
 };
 
 #endif    // __LEVEL_H__

@@ -17,6 +17,7 @@
 // Local Includes
 #include "resource.h"
 #include "utils.h"
+#include "gamesettings.h"
 
 // This Include
 #include "playership.h"
@@ -29,7 +30,6 @@
 
 CPlayerShip::CPlayerShip()
 	: m_bHit(false)
-	, m_iLives(3)
 {
 
 }
@@ -56,15 +56,17 @@ CPlayerShip::Draw()
 void
 CPlayerShip::Process(float _fDeltaTick)
 {
+	CGameSettings& rGameSettings = CGameSettings::GetInstance();
+
 	float fHalfPaddleW = m_pSprite->GetWidth() / 2.0;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		m_fX += 400.0f * _fDeltaTick;
+		m_fX += rGameSettings.GetPlayerSpeed() * _fDeltaTick;
 	}
 	else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{ 
-		m_fX -= 400.0f * _fDeltaTick;
+		m_fX -= rGameSettings.GetPlayerSpeed() * _fDeltaTick;
 	}
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
@@ -87,14 +89,4 @@ CPlayerShip::Process(float _fDeltaTick)
 bool CPlayerShip::IsHit() const
 {
 	return false;
-}
-
-void CPlayerShip::SetLives(int _iLives)
-{
-	m_iLives = _iLives;
-} 
-
-int CPlayerShip::GetLives() const
-{
-	return m_iLives;
 }

@@ -13,9 +13,12 @@
 //				: roger.smi7429@mediadesign.school.nz
 
 // Library Includes
+#include <fstream>
+#include <tchar.h>
 
 // Local Includes
 #include "Clock.h"
+#include "title.h"
 #include "Level.h"
 #include "BackBuffer.h"
 #include "utils.h"
@@ -32,18 +35,26 @@ CGame* CGame::s_pGame = 0;
 
 CGame::CGame()
 	: m_pLevel(0)
+	, m_pTitle(0)
+	, m_pGameover(0)
 	, m_pClock(0)
 	, m_hApplicationInstance(0)
 	, m_hMainWindow(0)
 	, m_pBackBuffer(0)
+	, m_eGameState(TITLE)
 {
-
 }
 
 CGame::~CGame()
 {
+	delete m_pTitle;
+	m_pTitle = 0;
+
 	delete m_pLevel;
 	m_pLevel = 0;
+
+	delete m_pGameover;
+	m_pGameover = 0;
 
 	delete m_pBackBuffer;
 	m_pBackBuffer = 0;
@@ -65,8 +76,14 @@ CGame::Initialise(HINSTANCE _hInstance, HWND _hWnd, int _iWidth, int _iHeight)
 	m_pBackBuffer = new CBackBuffer();
 	VALIDATE(m_pBackBuffer->Initialise(_hWnd, _iWidth, _iHeight));
 
+	m_pTitle = new CTitle();
+	VALIDATE(m_pTitle->Initialise(_iWidth, _iHeight));
+
 	m_pLevel = new CLevel();
 	VALIDATE(m_pLevel->Initialise(_iWidth, _iHeight));
+
+	m_pGameover = new CGameover();
+	VALIDATE(m_pGameover->Initialise(_iWidth, _iHeight));
 
 	ShowCursor(false);
 
@@ -78,7 +95,28 @@ CGame::Draw()
 {
 	m_pBackBuffer->Clear();
 
-	m_pLevel->Draw();
+	switch (m_eGameState)
+	{
+	case TITLE:
+	{
+		m_pTitle->Draw();
+		break;
+	}
+
+	case INGAME:
+	{
+		m_pLevel->Draw();
+		break;
+	}
+	
+	case GAMEOVER:
+	{
+		m_pGameover->Draw();
+		break;
+	}
+
+	default:break;
+	}
 
 	m_pBackBuffer->Present();
 }
@@ -86,7 +124,28 @@ CGame::Draw()
 void
 CGame::Process(float _fDeltaTick)
 {
-	m_pLevel->Process(_fDeltaTick);
+	switch (m_eGameState)
+	{
+	case TITLE:
+	{
+		m_pTitle->Process(_fDeltaTick);
+		break;
+	}
+
+	case INGAME:
+	{
+		m_pLevel->Process(_fDeltaTick);
+		break;
+	}
+
+	case GAMEOVER:
+	{
+		m_pGameover->Process(_fDeltaTick);
+		break;
+	}
+
+	default:break;
+	}
 }
 
 void
@@ -123,10 +182,39 @@ CGame::GameOverWon()
 void
 CGame::GameOverLost()
 {
-	MessageBox(m_hMainWindow, L"Loser!", L"Game Over", MB_OK);
-	PostQuitMessage(0);
-	//DestroyInstance();
-	//GetInstance();
+	SetHighScores();
+	SetGameState(GAMEOVER);
+}
+
+void CGame::GetHighScores()
+{
+	std::ifstream hFile("HighScores.txt");
+	std::string line;
+
+	while (std::getline(hFile, line))
+	{
+		m_vecHighScores.push_back(line);
+	}
+
+	hFile.close();
+}
+
+void CGame::SetHighScores()
+{
+	std::ofstream hFile("HighScores.txt");
+
+	for (int i = 0; i < m_vecHighScores.size(); ++i)
+	{
+		hFile << m_vecHighScores[i];
+		hFile << '\n';
+	}
+
+	hFile.close();
+}
+
+void CGame::SetGameState(EGameState _eGameState)
+{
+	m_eGameState = _eGameState;
 }
 
 void
@@ -159,4 +247,3 @@ CGame::GetWindow()
 {
 	return (m_hMainWindow);
 }
-

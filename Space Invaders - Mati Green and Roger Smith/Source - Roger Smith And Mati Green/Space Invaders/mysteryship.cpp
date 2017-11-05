@@ -15,13 +15,13 @@
 // Local Includes
 #include "resource.h"
 #include "utils.h"
+#include "gamesettings.h"
 
 // This Include
 #include "mysteryship.h"
 
 CMysteryShip::CMysteryShip()
-	: m_fVelocityX(0.0f)
-	, m_bHit(true)
+	: m_bHit(true)
 {
 
 }
@@ -39,8 +39,6 @@ CMysteryShip::Initialise(float _fPosX, float _fPosY, float _fVelocityX)
 	m_fX = _fPosX;
 	m_fY = _fPosY;
 
-	m_fVelocityX = _fVelocityX;
-
 	return (true);
 }
 
@@ -56,9 +54,10 @@ CMysteryShip::Draw()
 void
 CMysteryShip::Process(float _fDeltaTick)
 {
+	CGameSettings& rGameSettings = CGameSettings::GetInstance();
 	if (!m_bHit)
 	{
-		m_fX += (m_fVelocityX * _fDeltaTick);
+		m_fX += (rGameSettings.GetMysteryShipSpeed() * _fDeltaTick);
 
 		CEntity::Process(_fDeltaTick);
 	}
@@ -74,10 +73,4 @@ bool
 CMysteryShip::IsHit() const
 {
 	return(m_bHit);
-}
-
-void
-CMysteryShip::SetVelocityX(float _fX)
-{
-	m_fVelocityX = _fX;
 }

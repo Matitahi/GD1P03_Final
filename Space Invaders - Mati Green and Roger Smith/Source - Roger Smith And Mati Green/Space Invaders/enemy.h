@@ -31,7 +31,7 @@ class CEnemy : public CEntity
 {
 	// Member Functions
 public:
-	CEnemy(int _iType);
+	CEnemy(int _iType, float _fSpeed);
 
 	CEnemy();
 

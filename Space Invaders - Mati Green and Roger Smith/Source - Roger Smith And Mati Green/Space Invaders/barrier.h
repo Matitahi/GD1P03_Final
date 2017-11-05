@@ -45,6 +45,7 @@ public:
 	bool IsHit() const;
 
 	void ReduceHp();
+	void SetHp(int _iHp);
 
 private:
 	CBarrier(const CBarrier& _kr);

@@ -19,6 +19,7 @@
 
 // Local Includes
 #include "Game.h"
+#include "gamesettings.h"
 #include "playership.h"
 #include "PlayerBullet.h"
 #include "utils.h"
@@ -37,6 +38,8 @@
 
 //#define CHEAT_BOUNCE_ON_BACK_WALL
 
+CGameSettings& g_rGameSettings = CGameSettings::GetInstance();
+
 enum EShipPoints
 {
 	POINTS_ENEMY1 = 10,
@@ -52,11 +55,10 @@ CLevel::CLevel()
 , m_iHeight(0)
 , m_fpsCounter(0)
 , m_iScore(0)
-, m_fType1BulletSpeed(75.0)
-, m_fType2BulletSpeed(100.0)
-, m_fType3BulletSpeed(125.0)
+, m_iType1BulletSpeedIndex(2)
+, m_iType2BulletSpeedIndex(3)
+, m_iType3BulletSpeedIndex(4)
 {
-
 }
 
 CLevel::~CLevel()
@@ -72,7 +74,6 @@ CLevel::~CLevel()
 
 	delete m_pBackground;
 	m_pBackground = 0;
-
 }
 
 bool
@@ -84,30 +85,30 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 	srand(time(NULL));
 
     const float fPlayerBulletVelX = 0.0f;
-    float fPlayerBulletVelY = 250.0f;
-	float fMysteryShipVelX = 100.0f;
+
+	CGameSettings& rGameSettings = CGameSettings::GetInstance();
 
 	m_pBackground = new CBackGround();
 	VALIDATE(m_pBackground->Initialise());
+
 	//Set the background position to start from {0,0}
 	m_pBackground->SetX((float)m_iWidth / 2);
 	m_pBackground->SetY((float)m_iHeight / 2);
 
 	m_pPlayerBullet = new CPlayerBullet();
-    VALIDATE(m_pPlayerBullet->Initialise(0, 0, fPlayerBulletVelX, fPlayerBulletVelY));
+    VALIDATE(m_pPlayerBullet->Initialise(0, 0, fPlayerBulletVelX, rGameSettings.GetPlayerBulletSpeed()));
 
     m_pPlayerShip = new CPlayerShip();
     VALIDATE(m_pPlayerShip->Initialise());
 
 	m_pMysteryShip = new CMysteryShip();
-	VALIDATE(m_pMysteryShip->Initialise(-10, 10, fMysteryShipVelX));
+	VALIDATE(m_pMysteryShip->Initialise(-10, 10, rGameSettings.GetMysteryShipSpeed()));
 
     // Set the player ship's position to be centered on the x, 
     // and a little bit up from the bottom of the window.
     m_pPlayerShip->SetX(_iWidth / 2.0f);
     m_pPlayerShip->SetY(_iHeight - ( 1.2 * m_pPlayerShip->GetHeight()));
 
-    const int kiDefaultNumEnemies = 55;
     const int kiStartX = 20;
     const int kiGap = 5;
 
@@ -115,26 +116,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
     int iCurrentY = kiStartX;
 
 	// Creates the barriers.
-	for (int i = 0; i < 4; ++i)
-	{
-		for (int j = 0; j < 3; ++j)
-		{
-			for (int k = 0; k < 6; ++k)
-			{
-				if (!((k == 0 && j == 0) || (k == 5 && j == 0)
-					|| (k == 2 && j == 2) || (k == 3 && j == 2)))
-				{
-					CBarrier* pBarrier = new CBarrier();
-					VALIDATE(pBarrier->Initialise());
-
-					pBarrier->SetX(20 + (10 * k) + (95 * i) + (1 * k));
-					pBarrier->SetY(270 + (10 * j) + (1 * j));
-
-					m_vecBarrier.push_back(pBarrier);
-				}
-			}
-		}
-	}
+	ImplementBarriers();
 
 	// Creates the enemies.
 	int iEnemyType = 3;
@@ -143,7 +125,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 	{
 		for (int j = 0; j < 11; ++j)
 		{
-			CEnemy* pEnemy = new CEnemy(iEnemyType);
+			CEnemy* pEnemy = new CEnemy(iEnemyType, g_rGameSettings.GetAlienSpeed());
 			VALIDATE(pEnemy->Initialise());
 
 			pEnemy->SetX(static_cast<float>(iCurrentX));
@@ -163,7 +145,7 @@ CLevel::Initialise(int _iWidth, int _iHeight)
 		}
 	}
 
-    SetEnemiesRemaining(kiDefaultNumEnemies);
+    SetEnemiesRemaining(rGameSettings.GetAlienQuantity());
 
 	m_fpsCounter = new CFPSCounter();
 	VALIDATE(m_fpsCounter->Initialise());
@@ -434,6 +416,7 @@ CLevel::ProcessBoundsCollisions()
 void 
 CLevel::ProcessEnemyShoot()
 {
+	CGameSettings& rGameSettings = CGameSettings::GetInstance();
 	bool bCanShoot = true;
 
 	for (int i = 0; i < 5; ++i)
@@ -458,7 +441,7 @@ CLevel::ProcessEnemyShoot()
 						{
 
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType1BulletSpeed);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), rGameSettings.GetAlienType1BulletSpeed());
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 
 						}
@@ -468,7 +451,7 @@ CLevel::ProcessEnemyShoot()
 						if ((rand() % 7500 + 1) == 1)
 						{
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType2BulletSpeed);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), rGameSettings.GetAlienType2BulletSpeed());
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 						}
 					}
@@ -477,7 +460,7 @@ CLevel::ProcessEnemyShoot()
 						if ((rand() % 5000 + 1) == 1)
 						{
 							CEnemyBullet* pEnemyBullet = new CEnemyBullet();
-							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), m_fType3BulletSpeed);
+							pEnemyBullet->Initialise(m_pEnemies[j][i]->GetX(), m_pEnemies[j][i]->GetY(), rGameSettings.GetAlienType3BulletSpeed());
 							m_vecEnemyBullets.push_back(pEnemyBullet);
 						}
 					}
@@ -500,6 +483,60 @@ CLevel::ProcessMysteryShipSpawns()
 			// Possibly process before drawn?
 			m_pMysteryShip->SetHit(false);
 		}
+	}
+}
+
+CPlayerBullet * CLevel::GetPlayerBullet() const
+{
+	return (m_pPlayerBullet);
+}
+
+void CLevel::ImplementBarriers()
+{
+	int iIndex = 0;
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			for (int k = 0; k < 6; ++k)
+			{
+				if (!((k == 0 && j == 0) || (k == 5 && j == 0)
+					|| (k == 2 && j == 2) || (k == 3 && j == 2)))
+				{
+					iIndex = i + j + k;
+					//if (m_vecBarrier[iIndex] != 0)
+					//{
+					//	delete m_vecBarrier[iIndex];
+					//	m_vecBarrier[iIndex] = NULL;
+					//}
+
+					CBarrier* pBarrier = new CBarrier();
+					pBarrier->Initialise();
+
+					pBarrier->SetX(20 + (10 * k) + (95 * i) + (1 * k));
+					pBarrier->SetY(270 + (10 * j) + (1 * j));
+
+					m_vecBarrier.push_back(pBarrier);
+				}
+			}
+		}
+	}
+}
+
+void
+CLevel::RestoreBarriers()
+{
+	std::vector<CBarrier*>::const_iterator it = m_vecBarrier.begin();
+	while (it != m_vecBarrier.end())
+	{
+		if ((*it)->IsHit() == true)
+		{
+			(*it)->SetHit(false);
+		}
+
+		(*it)->SetHp(2);
+
+		it++;
 	}
 }
 
@@ -534,7 +571,7 @@ void CLevel::ProcessPlayerCollision()
 
 	if (bPlayerHit == true)
 	{
-		m_pPlayerShip->SetLives(m_pPlayerShip->GetLives() - 1);
+		g_rGameSettings.SetPlayerLives(g_rGameSettings.GetPlayerLives() - 1);
 	}
 }
 
@@ -591,14 +628,6 @@ CLevel::ProcessEnemyCollision()
 						break;
 					}
 
-					case 4:
-					{
-						// Since mystery ship has a variety of possible options, easier to deal with through random numbers
-						int iRand = rand() % 6 + 1;
-						iDeltaScore = iRand * 50;
-						break;
-					}
-
 					default:break;
 					}
 
@@ -631,6 +660,14 @@ CLevel::ProcessEnemyCollision()
 		{
 			m_pPlayerBullet->SetHit(true);
 			m_pMysteryShip->SetHit(true);
+
+			// Since mystery ship has a variety of possible options, easier to deal with through random numbers
+			int iRand = rand() % 6 + 1;
+			int iDeltaScore = iRand * 50;
+			
+			// Add the points above to the player's total score
+			SetScore(GetScore() + iDeltaScore);
+			UpdateScoreText();
 		}
 	}
 
@@ -638,7 +675,7 @@ CLevel::ProcessEnemyCollision()
 
 void CLevel::ProcessCheckForLoss()
 {
-	if (m_pPlayerShip->GetLives() == 0)
+	if (g_rGameSettings.GetPlayerLives() == 0)
 	{
 		CGame::GetInstance().GameOverLost();
 	}
@@ -677,36 +714,6 @@ CLevel::GetEnemiesRemaining() const
     return (m_iEnemiesRemaining);
 }
 
-float CLevel::GetType1BulletSpeed() const
-{
-	return (m_fType1BulletSpeed);
-}
-
-void CLevel::SetType1BulletSpeed(float _fSpeed)
-{
-	m_fType1BulletSpeed = _fSpeed;
-}
-
-float CLevel::GetType2BulletSpeed() const
-{
-	return (m_fType2BulletSpeed);
-}
-
-void CLevel::SetType2BulletSpeed(float _fSpeed)
-{
-	m_fType2BulletSpeed = _fSpeed;
-}
-
-float CLevel::GetType3BulletSpeed() const
-{
-	return (m_fType3BulletSpeed);
-}
-
-void CLevel::SetType3BulletSpeed(float _fSpeed)
-{
-	m_fType3BulletSpeed = _fSpeed;
-}
-
 void 
 CLevel::SetEnemiesRemaining(int _i)
 {
@@ -739,7 +746,7 @@ CLevel::DrawLives()
 {
 	m_strLives = "Lives: ";
 
-	m_strLives += ToString(m_pPlayerShip->GetLives());
+	m_strLives += ToString(g_rGameSettings.GetPlayerLives());
 	
 	HDC hdc = CGame::GetInstance().GetBackBuffer()->GetBFDC();
 

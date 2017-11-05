@@ -17,6 +17,7 @@
 // Local Includes
 #include "resource.h"
 #include "utils.h"
+#include "gamesettings.h"
 
 // This Includes
 #include "enemybullet.h"

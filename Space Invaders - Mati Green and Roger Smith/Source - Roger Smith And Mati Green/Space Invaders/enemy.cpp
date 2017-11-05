@@ -17,6 +17,7 @@
 // Local Includes
 #include "resource.h"
 #include "utils.h"
+#include "gamesettings.h"
 
 // This Include
 #include "enemy.h"
@@ -27,24 +28,18 @@
 
 // Implementation
 
-CEnemy::CEnemy(int _iType)
+CEnemy::CEnemy(int _iType, float _fSpeed)
 	: m_bHit(false)
 	, m_bMoveRight(true)
 	, m_iStepTick(0)
 	, m_iStepFreq(2)
-	, m_fSpeed(50.0)
+	, m_fSpeed(_fSpeed)
 	, m_bCanMove(true)
 {
 	m_iType = _iType;
 }
 
 CEnemy::CEnemy()
-	: m_bHit(false)
-	, m_bMoveRight(true)
-	, m_iStepTick(0)
-	, m_iStepFreq(2)
-	, m_fSpeed(50.0)
-	, m_bCanMove(true)
 {
 
 }
@@ -85,16 +80,17 @@ CEnemy::Draw()
 void
 CEnemy::Process(float _fDeltaTick)
 {
+	CGameSettings& rGameSettings = CGameSettings::GetInstance();
 	bool bCanStep = m_iStepTick % 20 == 0;
 	if (!m_bHit && m_bCanMove && bCanStep)
 	{
 		if (m_bMoveRight)
 		{
-			m_fX += m_fSpeed * _fDeltaTick;
+			m_fX += rGameSettings.GetAlienSpeed() * _fDeltaTick;
 		}
 		else
 		{
-			m_fX -= m_fSpeed * _fDeltaTick;
+			m_fX -= rGameSettings.GetAlienSpeed() * _fDeltaTick;
 		}
 		CEntity::Process(_fDeltaTick);
 	}

@@ -42,10 +42,6 @@ public:
 
 	bool IsHit() const;
 
-	void SetLives(int _iLives);
-	int GetLives() const;
-
-
 protected:
 
 private:
@@ -57,7 +53,6 @@ public:
 
 protected:
 	bool m_bHit;
-	int m_iLives;
 
 private:
 

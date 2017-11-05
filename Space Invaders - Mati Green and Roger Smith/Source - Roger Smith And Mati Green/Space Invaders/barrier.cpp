@@ -91,3 +91,26 @@ CBarrier::ReduceHp()
 		m_bHit = true;
 	}
 }
+
+void CBarrier::SetHp(int _iHp)
+{
+	m_iHp = _iHp;
+
+	switch (_iHp)
+	{
+		case 2:
+		{
+			CEntity::Initialise(IDB_BARRIER1SPRITE, IDB_BARRIERMASK);
+		}
+
+		case 1:
+		{
+			CEntity::Initialise(IDB_BARRIER2SPRITE, IDB_BARRIERMASK);
+		}
+
+		default:
+		{
+			m_bHit = true;
+		}
+	}
+}

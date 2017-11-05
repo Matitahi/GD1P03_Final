@@ -82,6 +82,8 @@
   <ItemGroup>
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="background.cpp" />
+    <ClCompile Include="gameover.cpp" />
+    <ClCompile Include="gamesettings.cpp" />
     <ClCompile Include="mysteryship.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="barrier.cpp" />
@@ -95,10 +97,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="playership.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="background.h" />
+    <ClInclude Include="gameover.h" />
+    <ClInclude Include="gamesettings.h" />
     <ClInclude Include="mysteryship.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="barrier.h" />
@@ -112,6 +117,7 @@
     <ClInclude Include="playership.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="title.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>

@@ -19,11 +19,21 @@
 
 // Library Includes
 #include <windows.h>
+#include <vector>
 
 // Local Includes
 #include "clock.h"
+#include "title.h"
+#include "gameover.h"
 
 // Types
+enum EGameState
+{
+	DEFAULT = 0,
+	TITLE = 1,
+	INGAME = 2,
+	GAMEOVER = 3,
+};
 
 // Constants
 
@@ -52,6 +62,11 @@ public:
 	void GameOverWon();
 	void GameOverLost();
 
+	void GetHighScores();
+	void SetHighScores();
+
+	void SetGameState(EGameState _eGameState);
+
 	// Singleton Methods
 	static CGame& GetInstance();
 	static void DestroyInstance();
@@ -68,7 +83,9 @@ public:
 
 protected:
 	CClock* m_pClock;
+	CTitle* m_pTitle;
 	CLevel* m_pLevel;
+	CGameover* m_pGameover;
 
 	CBackBuffer* m_pBackBuffer;
 
@@ -78,6 +95,10 @@ protected:
 
 	// Singleton Instance
 	static CGame* s_pGame;
+
+	std::vector<std::string> m_vecHighScores;
+
+	EGameState m_eGameState;
 
 private:
 

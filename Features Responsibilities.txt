@@ -3,7 +3,7 @@ ________________________________________|__________
 C	|Sprites		| Mat	| Done
 	|Player Movement	| Rog	| Done
 	|Player Shooting	| Mat	| Done	
-	|Enemy Movement		| Rog	| 
+	|Enemy Movement		| Rog	| Done
 	|Enemy Rows		| Rog	| Done
 	|Enemy Shooting		| Mat	| Done
 ________________________________________|__________
@@ -11,11 +11,11 @@ B	|Bunkers		| Mat	| Done
 	|Mystery Ship		| Mat	| Done
 	|Scoring		| Rog	| Done
 	|Lives			| Rog	| Done
-	|Lose Message		| Rog	|
-	|Debug Mode		| Rog	|
+	|Lose Message		| Rog	| 
+	|Debug Mode		| Rog	| 70% complete, one or two vars to be wired and testing needed
 ________________________________________|__________
 A	|Rounds (faster waves)	| Mat	|
-	|Title and Gameover	| Rog	|
-	|Save Scores		| Both	|
+	|Title and Gameover	| Rog	| 15 - 20% complete
+	|Save Scores		| Both	| 50% complete. Need to find a way to enter player name and score
 ________________________________________|__________	
 A+	|Additional Features	| Both	|

@@ -44,7 +44,6 @@ private:
 
 protected:
 	// Member Variables
-	float m_fVelocityX;
 	bool m_bHit;
 };
 
