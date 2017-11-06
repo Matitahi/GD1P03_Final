@@ -56,7 +56,7 @@ CGameSettings::GetPlayerSpeed() const
 void
 CGameSettings::SetPlayerSpeed(int _iIndex)
 {
-	m_fPlayerSpeed = (_iIndex * 100) + 100;
+	m_fPlayerSpeed = (static_cast<float>(_iIndex) * 100.0) + 100.0;
 }
 
 float
@@ -67,7 +67,7 @@ CGameSettings::GetPlayerBulletSpeed() const
 
 void CGameSettings::SetPlayerBulletSpeed(int _iIndex)
 {
-	m_fPlayerBulletSpeed = (_iIndex * 50) + 50;
+	m_fPlayerBulletSpeed = (static_cast<float>(_iIndex) * 50.0) + 50.0;
 }
 
 int
@@ -89,7 +89,7 @@ CGameSettings::GetAlienSpeed() const
 
 void CGameSettings::SetAlienSpeed(int _iIndex)
 {
-	m_fAlienSpeed = (_iIndex * 10) + 10;
+	m_fAlienSpeed = (static_cast<float>(_iIndex) * 10.0) + 10.0;
 }
 
 float CGameSettings::GetAlienType1BulletSpeed() const
@@ -99,7 +99,7 @@ float CGameSettings::GetAlienType1BulletSpeed() const
 
 void CGameSettings::SetAlienType1BulletSpeed(int _iIndex)
 {
-	m_fAlienType1BulletSpeed = (_iIndex * 25) + 25;
+	m_fAlienType1BulletSpeed = (static_cast<float>(_iIndex) * 25.0) + 25.0;
 }
 
 float CGameSettings::GetAlienType2BulletSpeed() const
@@ -109,17 +109,19 @@ float CGameSettings::GetAlienType2BulletSpeed() const
 
 void CGameSettings::SetAlienType2BulletSpeed(int _iIndex)
 {
-	m_fAlienType2BulletSpeed = (_iIndex * 25) + 25;
+	m_fAlienType2BulletSpeed = (static_cast<float>(_iIndex) * 25.0) + 25.0;
 }
 
-float CGameSettings::GetAlienType3BulletSpeed() const
+float
+CGameSettings::GetAlienType3BulletSpeed() const
 {
 	return (m_fAlienType3BulletSpeed);
 }
 
-void CGameSettings::SetAlienType3BulletSpeed(int _iIndex)
+void
+CGameSettings::SetAlienType3BulletSpeed(int _iIndex)
 {
-	m_fAlienType3BulletSpeed = (_iIndex * 25) + 25;
+	m_fAlienType3BulletSpeed = (static_cast<float>(_iIndex) * 25.0) + 25.0;
 }
 
 int
@@ -141,7 +143,7 @@ CGameSettings::GetMysteryShipSpeed() const
 
 void CGameSettings::SetMysteryShipSpeed(int _iIndex)
 {
-	m_fMysteryShipSpeed = (_iIndex * 25) + 25;
+	m_fMysteryShipSpeed = (_iIndex * 25.0) + 25.0;
 }
 
 TCHAR*

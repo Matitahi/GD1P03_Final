@@ -55,7 +55,7 @@ DebugDlgProc(HWND hDlg, UINT msg, WPARAM wparam, LPARAM lparam)
 	{
 	case WM_INITDIALOG:
 	{
-		// Store each combo box in it's respective handle
+		// Store each combo box in its respective handle
 		g_hPlayerSpeed = GetDlgItem(hDlg, IDC_COMBO8);
 		g_hPlayerBulletSpeed = GetDlgItem(hDlg, IDC_COMBO4);
 		g_hPlayerLives = GetDlgItem(hDlg, IDC_COMBO6);

@@ -670,7 +670,6 @@ CLevel::ProcessEnemyCollision()
 			UpdateScoreText();
 		}
 	}
-
 }
 
 void CLevel::ProcessCheckForLoss()
